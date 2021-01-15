@@ -1,6 +1,6 @@
 cd main
 includePath=-I../thirdparty/ffmpeg
-GPP=g++ -fPIC -shared
+GPP="g++ -fPIC -shared"
 $GPP $includePath -c getdur.cpp
 TEMP_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
 export PKG_CONFIG_PATH=pkgconfig/:$PKG_CONFIG_PATH
