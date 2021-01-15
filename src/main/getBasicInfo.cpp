@@ -14,7 +14,12 @@ extern "C" LIB_CLASS BasicInfo getBasicInfo(const char *url)
     re.mime_type = pFormatContext->iformat->mime_type;
     re.type_long_name = pFormatContext->iformat->long_name;
     re.type_name = pFormatContext->iformat->name;
-    avformat_find_stream_info(pFormatContext, NULL);
+    if (avformat_find_stream_info(pFormatContext, NULL) < 0)
+    {
+        avformat_close_input(&pFormatContext);
+        avformat_free_context(pFormatContext);
+        return re;
+    }
     unsigned int i = 0;
     for (; i < pFormatContext->nb_streams; i++)
     {
