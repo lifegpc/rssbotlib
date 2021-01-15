@@ -1,7 +1,7 @@
 cd thirdparty/ffmpeg
 make install
 cd ../../main/
-if [test -d pkgconfig]
+if [ test -d pkgconfig ]
 then
     rm -rfv pkgconfig
 fi
