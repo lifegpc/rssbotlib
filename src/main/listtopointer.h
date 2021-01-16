@@ -1,7 +1,7 @@
 #include <list>
 #include <malloc.h>
 
-template <class T> T* listtopointer(std::list<T> in, std::size_t& le) {
+template <class T> T* listToPointer(std::list<T> in, std::size_t& le) {
     std::size_t len = in.size();
     le = len <= 0 ? 0 : len;
     if (len <= 0) return NULL;

@@ -20,27 +20,30 @@ extern "C" LIB_CLASS BasicInfo getBasicInfo(const char* url) {
         return re;
     }
     unsigned int i = 0;
+    std::list<StreamInfo> streamList;
     for (; i < pFormatContext->nb_streams; i++) {
         AVStream* stream = pFormatContext->streams[i];
         AVCodecParameters* para = stream->codecpar;
+        StreamInfo info;
+        info.originCodecID = para->codec_id;
+        info.originMediaType = para->codec_type;
+        info.codecID = avcodecid2streamType(para->codec_id);
+        info.mediaType = avmediatype2mediaType(para->codec_type);
+        info.bitsPerCodedSample = para->bits_per_coded_sample;
+        info.bitsPerRawSample = para->bits_per_raw_sample;
+        info.bitRate = para->bit_rate;
+        info.profile = para->profile;
+        info.level = para->level;
         if (para->codec_type == AVMEDIA_TYPE_VIDEO) {
-            re.video_stream_count++;
-            if (re.video_stream_count == 1) {
-                re.width = para->width;
-                re.height = para->height;
-            }
-            if (para->codec_id == AV_CODEC_ID_H264) {
-                re.has_h264 = true;
-            }
+            info.width = para->width;
+            info.height = para->height;
         } else if (para->codec_type == AVMEDIA_TYPE_AUDIO) {
-            re.audio_stream_count++;
-            if (para->codec_id == AV_CODEC_ID_AAC || para->codec_id == AV_CODEC_ID_AAC_LATM) {
-                re.has_aac = true;
-            }
-        } else if (para->codec_type == AVMEDIA_TYPE_SUBTITLE) {
-            re.subtitle_stream_count++;
+            info.channels = para->channels;
+            info.sampleRate = para->sample_rate;
         }
+        streamList.push_back(info);
     }
+    re.stream_list = listToPointer(streamList, re.stream_list_length);
     re.get_stream_info_ok = true;
     avformat_close_input(&pFormatContext);
     avformat_free_context(pFormatContext);
