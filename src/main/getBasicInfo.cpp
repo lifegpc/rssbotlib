@@ -12,6 +12,7 @@ extern "C" LIB_CLASS BasicInfo getBasicInfo(const char* url) {
     re.mime_type = pFormatContext->iformat->mime_type;
     re.type_long_name = pFormatContext->iformat->long_name;
     re.type_name = pFormatContext->iformat->name;
+    re.ok = true;
     if (avformat_find_stream_info(pFormatContext, NULL) < 0) {
         avformat_close_input(&pFormatContext);
         avformat_free_context(pFormatContext);
@@ -39,7 +40,7 @@ extern "C" LIB_CLASS BasicInfo getBasicInfo(const char* url) {
             re.subtitle_stream_count++;
         }
     }
-    re.ok = true;
+    re.get_stream_info_ok = true;
     avformat_close_input(&pFormatContext);
     avformat_free_context(pFormatContext);
     return re;

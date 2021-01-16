@@ -21,6 +21,7 @@ struct BasicInfo {
     uint16_t subtitle_stream_count = 0;
     int width = 0;
     int height = 0;
+    bool get_stream_info_ok = false;
 };
 
 extern "C" LIB_CLASS BasicInfo getBasicInfo(const char* url);
