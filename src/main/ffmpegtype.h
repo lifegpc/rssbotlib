@@ -1,0 +1,4 @@
+enum STREAM_TYPE {
+    STREAM_TYPE_H264
+    , STREAM_TYPE_H265
+};

@@ -10,4 +10,4 @@ case "$OSTYPE" in
     linux*) OUTPUT_DLL=rssbot.so;;
     *) OUTPUT_DLL=rssbot.dll;;
 esac
-$GPP -shared -o $OUTPUT_DLL getBasicInfo.o $libavformat
+$GPP -shared -static-libstdc++ -o $OUTPUT_DLL getBasicInfo.o $libavformat

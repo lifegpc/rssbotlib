@@ -1,4 +1,5 @@
 #include "getBasicInfo.h"
+#include "listtopointer.h"
 
 extern "C" LIB_CLASS BasicInfo getBasicInfo(const char* url) {
     BasicInfo re;

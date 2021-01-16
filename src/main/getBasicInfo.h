@@ -6,6 +6,7 @@ extern "C" {
 #include "../thirdparty/ffmpeg/libavcodec/avcodec.h"
 #include "../thirdparty/ffmpeg/libavformat/avformat.h"
 }
+#include "ffmpegtype.h"
 
 struct BasicInfo {
     bool ok = false;
