@@ -92,6 +92,9 @@ jobs:
 
   build_windows:
     runs-on: windows-2019
+    defaults:
+      run:
+        shell: msys2 {0}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: checkout
@@ -99,10 +102,16 @@ jobs:
         with:
           fetch-depth: 0
           submodules: true
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: git mingw-w64-x86_64-toolchain
       # Runs a single command using the runners shell
       - name: Build
-        run: C:\msys64\mingw64 ./github_action_workflow_windows.sh
-        shell: cmd
+        run: ./github_action_workflow_windows.sh
 
       - name: Load Release URL File
         uses: actions/download-artifact@v2
@@ -115,7 +124,6 @@ jobs:
           value=`cat release_url.txt`
           echo ::set-output name=upload_url::$value
           echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-        shell: bash
 
       - name: Upload Build File
         uses: actions/upload-release-asset@v1
