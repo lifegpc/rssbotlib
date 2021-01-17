@@ -108,7 +108,7 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          install: mingw64/mingw-w64-x86_64-gcc msys/libgnutls msys/p7zip mingw64/mingw-w64-x86_64-make mingw64/mingw-w64-x86_64-diffutils
+          install: msys/libgnutls-devel mingw64/mingw-w64-x86_64-gcc mingw64/mingw-w64-x86_64-gnutls msys/p7zip mingw64/mingw-w64-x86_64-make mingw64/mingw-w64-x86_64-diffutils
       # Runs a single command using the runners shell
       - name: Build
         run: ./github_action_workflow_windows.sh
