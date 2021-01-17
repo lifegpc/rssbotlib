@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt install -y libgnutls30
+sudo apt install -y libgnutls28-dev
 if [ $? -ne 0 ]; then exit 1; fi
 cd src
 ./configure.sh
