@@ -89,3 +89,39 @@ jobs:
           asset_path: ./release.7z
           asset_name: rssbotlib_ubuntu_${{ steps.get_release_info.outputs.sha_short }}.7z
           asset_content_type: application/x-7z-compressed
+
+  build_windows:
+    runs-on: windows-2019
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
+      # Runs a single command using the runners shell
+      - name: Build
+        run: C:\msys64\mingw64 github_action_workflow_windows.sh
+
+      - name: Load Release URL File
+        uses: actions/download-artifact@v2
+        with:
+          name: release_url
+
+      - name: Get Upload URL
+        id: get_release_info
+        run: |
+          value=`cat release_url.txt`
+          echo ::set-output name=upload_url::$value
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        shell: bash
+
+      - name: Upload Build File
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release_info.outputs.upload_url }}
+          asset_path: ./release.7z
+          asset_name: rssbotlib_windows_${{ steps.get_release_info.outputs.sha_short }}.7z
+          asset_content_type: application/x-7z-compressed
