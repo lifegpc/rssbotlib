@@ -26,11 +26,11 @@ jobs:
         with:
           submodules: true
 
-        - name: Declare ref
-          id: vars
-          shell: bash
-          run: |
-            echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      - name: Declare ref
+        id: vars
+        shell: bash
+        run: |
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
       - name: Create Release
         id: create_release
