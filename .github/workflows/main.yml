@@ -24,6 +24,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           submodules: true
 
       - name: Declare ref
@@ -60,6 +61,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           submodules: true
       # Runs a single command using the runners shell
       - name: Build
@@ -74,7 +76,7 @@ jobs:
       - name: Get Upload URL
         id: get_release_info
         run: |
-          value=`cat release_url/release_url.txt`
+          value=`cat release_url.txt`
           echo ::set-output name=upload_url::$value
           echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
