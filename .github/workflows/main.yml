@@ -101,7 +101,7 @@ jobs:
           submodules: true
       # Runs a single command using the runners shell
       - name: Build
-        run: C:\msys64\mingw64 github_action_workflow_windows.sh
+        run: C:\msys64\mingw64 ./github_action_workflow_windows.sh
 
       - name: Load Release URL File
         uses: actions/download-artifact@v2
