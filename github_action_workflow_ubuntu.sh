@@ -8,5 +8,8 @@ sudo bash ./build_ffmpeg.sh
 if [ $? -ne 0 ]; then exit 1; fi
 sudo bash ./build.sh
 if [ $? -ne 0 ]; then exit 1; fi
-7z a -stm1 -y -mx9 ../release.7z main/rssbot.so
+cp -f main/rssbot.so ../rssbot.so
+if [ $? -ne 0 ]; then exit 1; fi
+cd ..
+7z a -stm1 -y -mx9 release.7z rssbot.so LICENSE
 if [ $? -ne 0 ]; then exit 1; fi

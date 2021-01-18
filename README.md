@@ -1,4 +1,5 @@
 # RSSBotLib
+[![build](https://github.com/lifegpc/rssbotlib/workflows/build/badge.svg)](https://github.com/lifegpc/rssbotlib/releases/latest)  
 [RSSBot](https://github.com/lifegpc/rssbot)使用的C++共享库。
 ## 构建
 请使用gcc构建本项目，在Windows系统下建议使用MSYS2的MingW。
