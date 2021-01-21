@@ -13,15 +13,30 @@ extern "C" LIB_CLASS BasicInfo getBasicInfo(const char* url) {
     re.mime_type = pFormatContext->iformat->mime_type;
     re.type_long_name = pFormatContext->iformat->long_name;
     re.type_name = pFormatContext->iformat->name;
+    av_dict_copy(&re.metadata, pFormatContext->metadata, AV_DICT_DONT_OVERWRITE);
+    std::list<ChapterInfo> chapters;
+    unsigned int i = 0;
+    for (; i < pFormatContext->nb_chapters; i++) {
+        if (pFormatContext->chapters[i] != NULL) {
+            AVChapter* chapter = pFormatContext->chapters[i];
+            ChapterInfo temp;
+            temp.id = chapter->id;
+            temp.time_base = chapter->time_base;
+            temp.start = chapter->start;
+            temp.end = chapter->end;
+            av_dict_copy(&temp.metadata, chapter->metadata, AV_DICT_DONT_OVERWRITE);
+            chapters.push_back(temp);
+        }
+    }
+    re.chapters = listToPointer(chapters, re.nb_chapters);
     re.ok = true;
     if (avformat_find_stream_info(pFormatContext, NULL) < 0) {
         avformat_close_input(&pFormatContext);
         avformat_free_context(pFormatContext);
         return re;
     }
-    unsigned int i = 0;
     std::list<StreamInfo> streamList;
-    for (; i < pFormatContext->nb_streams; i++) {
+    for (i = 0; i < pFormatContext->nb_streams; i++) {
         AVStream* stream = pFormatContext->streams[i];
         AVCodecParameters* para = stream->codecpar;
         StreamInfo info;
@@ -33,7 +48,7 @@ extern "C" LIB_CLASS BasicInfo getBasicInfo(const char* url) {
         info.bitsPerRawSample = para->bits_per_raw_sample;
         info.bitRate = para->bit_rate;
         info.profile = para->profile;
-        info.level = para->level;
+        av_dict_copy(&info.metadata, stream->metadata, AV_DICT_DONT_OVERWRITE);
         if (para->codec_type == AVMEDIA_TYPE_VIDEO) {
             info.width = para->width;
             info.height = para->height;

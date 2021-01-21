@@ -40,3 +40,7 @@ extern "C" LIB_CLASS const char** getCodecMimeType(int codecId, std::size_t * le
     if (len != NULL) *len = le;
     return r;
 }
+
+extern "C" LIB_CLASS int getAVTIMEBASE() {
+    return AV_TIME_BASE;
+}

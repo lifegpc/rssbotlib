@@ -4,6 +4,14 @@ extern "C" {
 }
 #include "ffmpegtype.h"
 
+struct ChapterInfo {
+    size_t id;
+    AVRational time_base;
+    int64_t start;
+    int64_t end;
+    AVDictionary* metadata = NULL;
+};
+
 struct StreamInfo {
     AVMediaType originMediaType;
     MEDIA_TYPE mediaType;
@@ -18,6 +26,7 @@ struct StreamInfo {
     int height = -1;
     int channels = -1;
     int sampleRate = -1;
+    AVDictionary* metadata = NULL;
 };
 
 struct BasicInfo {
@@ -30,6 +39,9 @@ struct BasicInfo {
     bool get_stream_info_ok = false;
     StreamInfo* stream_list = NULL;
     std::size_t stream_list_length;
+    AVDictionary* metadata = NULL;
+    ChapterInfo* chapters = NULL;
+    std::size_t nb_chapters;
 };
 
 extern "C" LIB_CLASS BasicInfo getBasicInfo(const char* url);
