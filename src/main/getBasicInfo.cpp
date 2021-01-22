@@ -55,6 +55,7 @@ extern "C" LIB_CLASS BasicInfo getBasicInfo(const char* url) {
         } else if (para->codec_type == AVMEDIA_TYPE_AUDIO) {
             info.channels = para->channels;
             info.sampleRate = para->sample_rate;
+            info.channel_layout = para->channel_layout;
         }
         streamList.push_back(info);
     }

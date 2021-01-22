@@ -27,6 +27,7 @@ struct StreamInfo {
     int channels = -1;
     int sampleRate = -1;
     AVDictionary* metadata = NULL;
+    uint64_t channel_layout;
 };
 
 struct BasicInfo {

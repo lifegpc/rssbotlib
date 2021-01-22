@@ -44,3 +44,9 @@ extern "C" LIB_CLASS const char** getCodecMimeType(int codecId, std::size_t * le
 extern "C" LIB_CLASS int getAVTIMEBASE() {
     return AV_TIME_BASE;
 }
+
+extern "C" LIB_CLASS char* getChannelLayoutString(uint64_t layout) {
+    char *r = new char[10240];
+    av_get_channel_layout_string(r, 10240, av_get_channel_layout_nb_channels(layout), layout);
+    return r;
+}
