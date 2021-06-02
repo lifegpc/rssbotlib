@@ -4,3 +4,5 @@
 *.a
 *.pc
 *.so
+/src/ffmpeg-build/
+build/
